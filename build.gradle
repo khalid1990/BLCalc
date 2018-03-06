@@ -1,0 +1,29 @@
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "javax.servlet:jstl"
+    providedRuntime "org.apache.tomcat.embed:tomcat-embed-jasper" //requires apply plugin: 'war'
+
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "com.h2database:h2"
+}
