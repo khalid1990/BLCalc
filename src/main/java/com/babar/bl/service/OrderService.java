@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
  * @author babar
  * @since 3/6/18.
  */
+/*Notice you don't need @Repository annotation here*/
 public interface OrderService extends CrudRepository<Order, Integer> {
 }
