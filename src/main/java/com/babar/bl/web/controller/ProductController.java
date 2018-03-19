@@ -24,6 +24,8 @@ public class ProductController {
 
     private static final String PRODUCT_VIEW_FORM = "product/product-view-form";
 
+    private static final String PRODUCT_LIST_VIEW = "product/product-list-view";
+
     @Autowired
     private ProductService productService;
 
@@ -52,7 +54,13 @@ public class ProductController {
         return PRODUCT_FORM;
     }
 
-    @ResponseBody
+    @GetMapping(value = "/list")
+    public String list(ModelMap modelMap) {
+        modelMap.put("products", productService.findAll());
+
+        return PRODUCT_LIST_VIEW;
+    }
+
     @PostMapping(value = "/index", params = "_action_save")
     public String saveOrUpdate(@ModelAttribute Product product) {
         productService.save(product);
