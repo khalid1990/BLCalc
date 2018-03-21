@@ -3,6 +3,7 @@ package com.babar.bl.web.controller;
 import com.babar.bl.service.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,9 @@ public class InvestmentController {
     private InvestmentService investmentService;
 
     @GetMapping(value = "/show")
-    public String show(@RequestParam("id") int id) {
+    public String show(@RequestParam("id") int id, ModelMap modelMap) {
+        modelMap.put("investment", investmentService.findOne(id));
+
         return INVESTMENT_VIEW_FORM;
     }
 

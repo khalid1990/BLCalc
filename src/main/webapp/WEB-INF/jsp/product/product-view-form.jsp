@@ -11,20 +11,7 @@
     <script type="text/javascript" src="<c:url value="/resources/js/jquery-ui-1.12.1/jquery-ui.js"/> "></script>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/js/jquery-ui-1.12.1/jquery-ui.css"/> "/>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/bootstrap-3.3.7-dist/css/bootstrap.css"/> "/>
-    <script>
-        $( function() {
-            $( ".date-field" ).datepicker();
-        } );
-    </script>
-
-    <style type="text/css">
-        .container {
-            position: relative;
-            width: 80%;
-            height: auto;
-            overflow: auto;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/site.css"/>"/>
 </head>
 
 <body>

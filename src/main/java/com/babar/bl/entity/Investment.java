@@ -1,5 +1,8 @@
 package com.babar.bl.entity;
 
+import com.babar.bl.entity.common.enums.InvestmentType;
+import com.babar.bl.entity.common.enums.Investor;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,11 +17,15 @@ public class Investment {
     @Id
     private int id;
 
-    private String madeBy;
+    @Enumerated(EnumType.STRING)
+    private Investor investor;
+
+    @Enumerated(EnumType.STRING)
+    private InvestmentType investmentType;
 
     private int amount;
 
-    private String desc;
+    private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -31,12 +38,20 @@ public class Investment {
         this.id = id;
     }
 
-    public String getMadeBy() {
-        return madeBy;
+    public Investor getInvestor() {
+        return investor;
     }
 
-    public void setMadeBy(String madeBy) {
-        this.madeBy = madeBy;
+    public void setInvestor(Investor investor) {
+        this.investor = investor;
+    }
+
+    public InvestmentType getInvestmentType() {
+        return investmentType;
+    }
+
+    public void setInvestmentType(InvestmentType investmentType) {
+        this.investmentType = investmentType;
     }
 
     public int getAmount() {
@@ -47,12 +62,12 @@ public class Investment {
         this.amount = amount;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDate() {

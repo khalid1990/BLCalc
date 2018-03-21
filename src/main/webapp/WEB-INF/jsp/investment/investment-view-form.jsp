@@ -11,15 +11,44 @@
     <script type="text/javascript" src="<c:url value="/resources/js/jquery-ui-1.12.1/jquery-ui.js"/> "></script>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/js/jquery-ui-1.12.1/jquery-ui.css"/> "/>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/bootstrap-3.3.7-dist/css/bootstrap.css"/> "/>
-    <script>
-        $( function() {
-            $( ".date-field" ).datepicker();
-        } );
-    </script>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/site.css"/> "/>
 </head>
 
 <body>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <fmt:message key="label.investment"/>
+            </div>
 
+            <div class="panel-body">
+                <div class="row">
+                    <label class="col-sm-2"><fmt:message key="label.investment.investor"/></label>
+                    <div class="col-sm-10">${investment.investor}</div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><fmt:message key="label.investment.type"/></label>
+                    <div class="col-sm-10">${investment.investmentType}</div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><fmt:message key="label.investment.amount"/></label>
+                    <div class="col-sm-10">${investment.amount}</div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><fmt:message key="label.description"/></label>
+                    <div class="col-sm-10">${investment.description}</div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><fmt:message key="label.date"/></label>
+                    <div class="col-sm-10">${investment.date}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
