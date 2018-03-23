@@ -5,5 +5,5 @@ package com.babar.bl.entity.common.enums;
  * @since 3/21/18.
  */
 public enum Investor {
-    BABAR, RIAD
+    BABAR, RIAD, BUDGET_LAB
 }
