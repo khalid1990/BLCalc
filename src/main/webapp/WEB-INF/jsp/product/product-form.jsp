@@ -23,10 +23,18 @@
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
-
+                <fmt:message key="label.product"/>
             </div>
 
             <div class="panel-body">
+                <c:if test="${product.id != 0}">
+                    <c:url var="showUrl" value="/product/show">
+                        <c:param name="id" value="${product.id}"/>
+                    </c:url>
+
+                    <a href="${showUrl}"><fmt:message key="label.back.to.show"/></a>
+                </c:if>
+                
                 <form:form action="index" method="post" enctype="multipart/form-data" modelAttribute="product" cssClass="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2"> <fmt:message key="label.product.bl.id"/> </label>

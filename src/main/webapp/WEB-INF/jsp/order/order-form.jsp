@@ -28,6 +28,14 @@
             </div>
 
             <div class="panel-body">
+                <c:if test="${order.id != 0}">
+                    <c:url var="showUrl" value="/order/show">
+                        <c:param name="id" value="${order.id}"/>
+                    </c:url>
+
+                    <a href="${showUrl}"><fmt:message key="label.back.to.show"/></a>
+                </c:if>
+
                 <form:form action="index" method="post" modelAttribute="order">
                     <div class="row">
                         <label class="col-sm-2"><fmt:message key="label.order.system.id"/></label>

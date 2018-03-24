@@ -27,6 +27,14 @@
         </div>
 
         <div class="panel-body">
+            <c:if test="${investment.id != 0}">
+                <c:url var="showUrl" value="/investment/show">
+                    <c:param name="id" value="${investment.id}"/>
+                </c:url>
+
+                <a href="${showUrl}"><fmt:message key="label.back.to.show"/></a>
+            </c:if>
+
             <form:form action="index" method="post" modelAttribute="investment">
                 <div class="row">
                     <label class="col-sm-2"><fmt:message key="label.investment.investor"/></label>

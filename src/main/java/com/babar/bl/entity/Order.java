@@ -46,6 +46,8 @@ public class Order {
 
     private String comment;
 
+    private boolean shipped;
+
     public int getId() {
         return id;
     }
@@ -164,5 +166,13 @@ public class Order {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isShipped() {
+        return shipped;
+    }
+
+    public void setShipped(boolean shipped) {
+        this.shipped = shipped;
     }
 }
