@@ -78,6 +78,102 @@
             </div>
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <fmt:message key="label.shipment.added.order"/>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="label.order.client.name"/></th>
+                        <th><fmt:message key="label.order.address"/> & <fmt:message key="label.order.phone"/></th>
+                        <th><fmt:message key="label.order.detail"/></th>
+                        <th><fmt:message key="label.order.inside.dhaka"/></th>
+                        <th><fmt:message key="label.order.comment"/></th>
+                        <th><fmt:message key="label.action"/></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <c:forEach items="${shipment.orders}" var="order">
+                        <tr>
+                            <td>${order.clientName}</td>
+                            <td>${order.address}<br>${order.phone}</td>
+                            <td>${order.orderDetail}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${order.insideDhaka}">Yes</c:when>
+                                    <c:otherwise>No</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${order.comment}</td>
+                            <td>
+                                <c:url var="removeFromShipment" value="/shipment/removeFromShipment">
+                                    <c:param name="shipmentId" value="${shipment.id}"/>
+                                    <c:param name="orderId" value="${order.id}"/>
+                                </c:url>
+
+                                <a href="${removeFromShipment}">
+                                    <fmt:message key="label.shipment.remove.order"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <fmt:message key="label.shipment.not.added"/>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="label.order.client.name"/></th>
+                        <th><fmt:message key="label.order.address"/> & <fmt:message key="label.order.phone"/></th>
+                        <th><fmt:message key="label.order.detail"/></th>
+                        <th><fmt:message key="label.order.inside.dhaka"/></th>
+                        <th><fmt:message key="label.order.comment"/></th>
+                        <th><fmt:message key="label.action"/></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <c:forEach items="${unshippedOrders}" var="order">
+                        <tr>
+                            <td>${order.clientName}</td>
+                            <td>${order.address}<br>${order.phone}</td>
+                            <td>${order.orderDetail}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${order.insideDhaka}">Yes</c:when>
+                                    <c:otherwise>No</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${order.comment}</td>
+                            <td>
+                                <c:url var="addToShipment" value="/shipment/addToShipment">
+                                    <c:param name="shipmentId" value="${shipment.id}"/>
+                                    <c:param name="orderId" value="${order.id}"/>
+                                </c:url>
+
+                                <a href="${addToShipment}">
+                                    <fmt:message key="label.add.to.shipment"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 

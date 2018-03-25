@@ -1,9 +1,11 @@
 package com.babar.bl.web.controller;
 
+import com.babar.bl.entity.Order;
 import com.babar.bl.entity.Shipment;
 import com.babar.bl.entity.common.enums.PaymentMethod;
 import com.babar.bl.entity.common.enums.ShipmentStatus;
 import com.babar.bl.entity.common.enums.TransportVendor;
+import com.babar.bl.service.OrderService;
 import com.babar.bl.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class ShipmentController {
 
     @Autowired
     private ShipmentService shipmentService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
@@ -50,6 +55,7 @@ public class ShipmentController {
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         modelMap.put("shipment", shipmentService.findOne(id));
+        modelMap.put("unshippedOrders", orderService.findByShipped(false));
 
         return SHIPMENT_VIEW_FORM;
     }
@@ -65,6 +71,36 @@ public class ShipmentController {
     public String saveOrUpdate(@ModelAttribute Shipment shipment) {
         shipmentService.save(shipment);
 
-        return "redirect:/show?id=" + shipment.getId();
+        return "redirect:show?id=" + shipment.getId();
+    }
+
+    @GetMapping(value = "/addToShipment")
+    public String addToShipment(@RequestParam("shipmentId") int shipmentId,
+                                @RequestParam("orderId") int orderId) {
+
+        Shipment shipment = shipmentService.findOne(shipmentId);
+        Order order = orderService.findOne(orderId);
+        shipment.getOrders().add(order);
+        shipmentService.save(shipment);
+
+        order.setShipped(true);
+        orderService.save(order);
+
+        return "redirect:show?id=" + shipment.getId();
+    }
+
+    @GetMapping(value = "/removeFromShipment")
+    public String removeFromShipment(@RequestParam("shipmentId") int shipmentId,
+                                     @RequestParam("orderId") int orderId) {
+
+        Shipment shipment = shipmentService.findOne(shipmentId);
+        Order order = orderService.findOne(orderId);
+        shipment.getOrders().remove(order);
+        shipmentService.save(shipment);
+
+        order.setShipped(false);
+        orderService.save(order);
+
+        return "redirect:show?id=" + shipment.getId();
     }
 }
