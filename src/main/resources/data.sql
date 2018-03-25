@@ -6,8 +6,10 @@ insert into bl_order
   values (1, '#32', 'Abul Hasan', 'www.facebook.com', 'banani 11', '0154214547', 'order detail', 1, 'KAHAR',  'DELIVERED',
    60, 30, 1200, 200, 'comment', 0);
 
-insert into bl_investment (id, investor, investment_type, amount, description, date)
-  values (1, 'BABAR', 'PRODUCT', 2500, 'Bought ...', '2018-02-13 07:15:31.123456789');
+insert into bl_investor (id, name) values (1, 'Babar');
+
+insert into bl_investment (id, investor_id, investment_type, amount, description, date)
+  values (1, 1, 'PRODUCT', 2500, 'Bought ...', '2018-02-13 07:15:31.123456789');
 
 insert into bl_product (id, bl_id, source_id, name, image_url, prod_url, buying_price, selling_price, product_type, material,
   stock, discontinued, description) values (1, '#4455', '1129', 'Colorphabets',

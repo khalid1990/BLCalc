@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Order {
 
     @Id
+    @GeneratedValue
     private int id;
 
     private String systemId;

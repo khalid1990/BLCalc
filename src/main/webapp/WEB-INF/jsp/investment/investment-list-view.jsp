@@ -65,8 +65,16 @@
                     <tbody>
                         <c:forEach items="${investments}" var="investment">
                             <tr>
-                                <td><fmt:formatDate value="${investment.date}" pattern="dd/MM/yyyy"/></td>
-                                <td>${investment.investor}</td>
+                                <td>
+                                    <c:url var="showUrl" value="/investment/show">
+                                        <c:param name="id" value="${investment.id}"/>
+                                    </c:url>
+
+                                    <a href="${showUrl}">
+                                        <fmt:formatDate value="${investment.date}" pattern="dd/MM/yyyy"/>
+                                    </a>
+                                </td>
+                                <td>${investment.investor.name}</td>
                                 <td>${investment.amount}</td>
                                 <td>${investment.investmentType}</td>
                             </tr>

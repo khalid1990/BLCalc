@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/product")
-@SessionAttributes(ProductController.SESSION_KEY)
+@SessionAttributes(ProductController.COMMAND_NAME)
 public class ProductController {
 
-    public static final String SESSION_KEY = "product";
+    public static final String COMMAND_NAME = "product";
 
     private static final String PRODUCT_FORM = "product/product-form";
 
@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
-        modelMap.put(SESSION_KEY, new Product());
+        modelMap.put(COMMAND_NAME, new Product());
         modelMap.put("productTypes", ProductType.values());
         modelMap.put("materials", Material.values());
 
@@ -41,7 +41,7 @@ public class ProductController {
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         Product product = productService.findOne(id);
-        modelMap.put(SESSION_KEY, product);
+        modelMap.put(COMMAND_NAME, product);
 
         return PRODUCT_VIEW_FORM;
     }
@@ -49,7 +49,7 @@ public class ProductController {
     @GetMapping(value = "/edit")
     public String edit(@RequestParam("id") int id, ModelMap modelMap) {
         Product product =  productService.findOne(id);
-        modelMap.put(SESSION_KEY, product);
+        modelMap.put(COMMAND_NAME, product);
 
         return PRODUCT_FORM;
     }

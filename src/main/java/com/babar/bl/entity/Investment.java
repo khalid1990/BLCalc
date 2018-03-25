@@ -1,7 +1,6 @@
 package com.babar.bl.entity;
 
 import com.babar.bl.entity.common.enums.InvestmentType;
-import com.babar.bl.entity.common.enums.Investor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,9 +14,10 @@ import java.util.Date;
 public class Investment {
 
     @Id
+    @GeneratedValue
     private int id;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Investor investor;
 
     @Enumerated(EnumType.STRING)

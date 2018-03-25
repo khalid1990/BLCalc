@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/order")
+@SessionAttributes(OrderController.COMMAND_NAME)
 public class OrderController {
+
+    public static final String COMMAND_NAME = "order";
 
     private static final String ORDER_FORM = "order/order-form";
 
@@ -29,7 +32,7 @@ public class OrderController {
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         Order order = orderService.findOne(id);
-        modelMap.put("order", order);
+        modelMap.put(COMMAND_NAME, order);
 
         return ORDER_VIEW_FORM;
     }
@@ -37,7 +40,7 @@ public class OrderController {
     @GetMapping(value = "/create")
     public String create(ModelMap modelMap) {
         Order order = new Order();
-        modelMap.put("order", order);
+        modelMap.put(COMMAND_NAME, order);
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("orderStatuses", OrderStatus.values());
 
@@ -47,7 +50,7 @@ public class OrderController {
     @GetMapping(value = "/edit")
     public String edit(@RequestParam("id") int id, ModelMap modelMap) {
         Order order = orderService.findOne(id);
-        modelMap.put("order", order);
+        modelMap.put(COMMAND_NAME, order);
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("orderStatuses", OrderStatus.values());
 
@@ -61,7 +64,7 @@ public class OrderController {
         return ORDER_LIST_VIEW;
     }
 
-    @PostMapping(value = "/index")
+    @PostMapping(value = "/index", params = "_action_save")
     public String saveOrUpdate(@ModelAttribute Order order) {
         orderService.save(order);
 

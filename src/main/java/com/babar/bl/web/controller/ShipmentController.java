@@ -8,9 +8,17 @@ import com.babar.bl.entity.common.enums.TransportVendor;
 import com.babar.bl.service.OrderService;
 import com.babar.bl.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author sherlock
@@ -18,7 +26,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/shipment")
+@SessionAttributes(ShipmentController.COMMAND_NAME)
 public class ShipmentController {
+
+    public static final String COMMAND_NAME = "shipment";
 
     private static final String SHIPMENT_FORM = "shipment/shipment-form";
 
@@ -32,9 +43,17 @@ public class ShipmentController {
     @Autowired
     private OrderService orderService;
 
+    @InitBinder(value = COMMAND_NAME)
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
-        modelMap.put("shipment", new Shipment());
+        modelMap.put(COMMAND_NAME, new Shipment());
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("shipmentStatuses", ShipmentStatus.values());
         modelMap.put("paymentMethods", PaymentMethod.values());
@@ -44,7 +63,7 @@ public class ShipmentController {
 
     @GetMapping("/edit")
     public String edit(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.put("shipment", shipmentService.findOne(id));
+        modelMap.put(COMMAND_NAME, shipmentService.findOne(id));
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("shipmentStatuses", ShipmentStatus.values());
         modelMap.put("paymentMethods", PaymentMethod.values());
@@ -54,7 +73,7 @@ public class ShipmentController {
 
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.put("shipment", shipmentService.findOne(id));
+        modelMap.put(COMMAND_NAME, shipmentService.findOne(id));
         modelMap.put("unshippedOrders", orderService.findByShipped(false));
 
         return SHIPMENT_VIEW_FORM;
@@ -70,6 +89,12 @@ public class ShipmentController {
     @PostMapping(value = "/index", params = "_action_save")
     public String saveOrUpdate(@ModelAttribute Shipment shipment) {
         shipmentService.save(shipment);
+        /*if (result.hasErrors()) {
+            System.out.println("errors");
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.toString());
+            }
+        }*/
 
         return "redirect:show?id=" + shipment.getId();
     }

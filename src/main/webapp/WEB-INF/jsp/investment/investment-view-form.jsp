@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <div class="row">
                     <label class="col-sm-2"><fmt:message key="label.investment.investor"/></label>
-                    <div class="col-sm-10">${investment.investor}</div>
+                    <div class="col-sm-10">${investment.investor.name}</div>
                 </div>
 
                 <div class="row">
@@ -45,6 +45,16 @@
                 <div class="row">
                     <label class="col-sm-2"><fmt:message key="label.date"/></label>
                     <div class="col-sm-10">${investment.date}</div>
+                </div>
+
+                <div class="row">
+                    <c:url var="editUrl" value="/investment/edit">
+                        <c:param name="id" value="${investment.id}"/>
+                    </c:url>
+
+                    <a href="${editUrl}">
+                        <fmt:message key="label.edit"/>
+                    </a>
                 </div>
             </div>
         </div>

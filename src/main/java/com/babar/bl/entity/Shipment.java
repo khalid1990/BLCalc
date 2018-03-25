@@ -17,6 +17,7 @@ import java.util.List;
 public class Shipment {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Enumerated(EnumType.STRING)
@@ -27,11 +28,13 @@ public class Shipment {
     @Enumerated(EnumType.STRING)
     private ShipmentStatus shipmentStatus;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date shipmentDate;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
     private int payableAmount;

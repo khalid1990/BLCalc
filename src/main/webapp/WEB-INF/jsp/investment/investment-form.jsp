@@ -40,7 +40,7 @@
                     <label class="col-sm-2"><fmt:message key="label.investment.investor"/></label>
                     <div class="col-sm-10">
                         <form:select path="investor" cssClass="form-control">
-                            <form:options items="${investors}"/>
+                            <form:options items="${investors}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                 </div>
@@ -76,7 +76,8 @@
                 </div>
 
                 <div class="row">
-                    <input type="submit" class="btn btn-default" value="<fmt:message key="label.save.or.update"/>">
+                    <input type="submit" class="btn btn-default" name="_action_save"
+                           value="<fmt:message key="label.save.or.update"/>">
                 </div>
             </form:form>
         </div>

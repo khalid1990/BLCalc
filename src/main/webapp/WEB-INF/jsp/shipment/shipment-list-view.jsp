@@ -44,7 +44,12 @@
                 <tbody>
                     <c:forEach items="${shipments}" var="shipment">
                         <tr>
-                            <td>${shipment.id}</td>
+                            <td>
+                                <c:url var="showUrl" value="/shipment/show">
+                                    <c:param name="id" value="${shipment.id}"/>
+                                </c:url>
+                                <a href="${showUrl}">${shipment.id}</a>
+                            </td>
                             <td>${shipment.transportVendor}#${shipment.serialNoWithTransportVendor}</td>
                             <td>${shipment.shipmentStatus}</td>
                             <td>${shipment.shipmentDate}</td>

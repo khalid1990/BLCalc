@@ -47,7 +47,14 @@
                 <tbody>
                     <c:forEach items="${orders}" var="order">
                         <tr>
-                            <td>${order.systemId}</td>
+                            <td>
+                                <c:url var="showUrl" value="/order/show">
+                                    <c:param name="id" value="${order.systemId}"/>
+                                </c:url>
+                                <a href="${showUrl}">
+                                    ${order.systemId}
+                                </a>
+                            </td>
                             <td>${order.clientName}</td>
                             <td>${order.address}<br>${order.phone}</td>
                             <td>${order.orderDetail}</td>
