@@ -18,32 +18,39 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <fmt:message key="label.investor"/>
+            <fmt:message key="label.account"/>
         </div>
 
         <div class="panel-body">
+
             <div class="row">
-                <label class="col-sm-2"><fmt:message key="label.investor.name"/></label>
-                <div class="col-sm-10">${investor.name}</div>
+                <label class="col-sm-2"><fmt:message key="label.account.name"/></label>
+
+                <div class="col-sm-10">${account.name}</div>
             </div>
 
             <div class="row">
-                <c:url var="editUrl" value="/investor/edit">
-                    <c:param name="id" value="${investor.id}"/>
-                </c:url>
+                <label class="col-sm-2"><fmt:message key="label.total.amount"/></label>
 
-                <a href="${editUrl}" class="btn btn-default">
-                    <fmt:message key="label.edit"/>
-                </a>
-                <input class="btn btn-default" type="submit" name="_action_save"
-                       value="<fmt:message key="label.save.or.update"/>">
-
-                <c:url var="createAccount" value="/investor/createAccount">
-                    <c:param name="investorId" value="${investor.id}"/>
-                </c:url>
-
-                <a href="${createAccount}"><fmt:message key="label.create.account"/></a>
+                <div class="col-sm-10">${account.amount}</div>
             </div>
+
+            <div class="row">
+                <label class="col-sm-2"><fmt:message key="label.investor"/></label>
+
+                <div class="col-sm-10">
+                    ${account.investor.name}
+                </div>
+            </div>
+
+            <div class="row">
+                <c:url var="backToInvestor" value="/investor/show">
+                    <c:param name="id" value="${account.investor.id}"/>
+                </c:url>
+
+                <a href="${backToInvestor}"><fmt:message key="label.back.to.investor"/></a>
+            </div>
+
         </div>
     </div>
 </div>

@@ -1,6 +1,8 @@
 package com.babar.bl.web.controller;
 
+import com.babar.bl.entity.Account;
 import com.babar.bl.entity.Investor;
+import com.babar.bl.service.AccountService;
 import com.babar.bl.service.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,12 @@ import javax.persistence.Entity;
  */
 @Controller
 @RequestMapping(("/investor"))
-@SessionAttributes(InvestorController.COMMAND_NAME)
+@SessionAttributes({InvestorController.COMMAND_NAME, InvestorController.ACCOUNT_COMMAND_NAME})
 public class InvestorController {
 
     public static final String COMMAND_NAME = "investor";
+
+    public static final String ACCOUNT_COMMAND_NAME = "account";
 
     private static final String INVESTOR_FORM = "investor/investor-form";
 
@@ -26,8 +30,15 @@ public class InvestorController {
 
     private static final String INVESTOR_LIST_VIEW = "investor/investor-list-view";
 
+    private static final String ACCOUNT_FORM = "account/account-form";
+
+    private static final String ACCOUNT_VIEW_FORM = "account/account-view-form";
+
     @Autowired
     private InvestorService investorService;
+
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
@@ -62,5 +73,29 @@ public class InvestorController {
         Investor savedInstance = investorService.save(investor);
 
         return "redirect:show?id=" + investor.getId();
+    }
+
+    @GetMapping("/createAccount")
+    public String createAccount(@RequestParam("investorId") int investorId, ModelMap modelMap) {
+        Account account = new Account();
+        account.setInvestor(investorService.findOne(investorId));
+        modelMap.put(ACCOUNT_COMMAND_NAME, account);
+
+        return ACCOUNT_FORM;
+    }
+
+    @GetMapping("/showAccount")
+    public String showAccount(@RequestParam("id") int id, ModelMap modelMap) {
+        Account account = accountService.findOne(id);
+        modelMap.put(ACCOUNT_COMMAND_NAME, account);
+
+        return ACCOUNT_VIEW_FORM;
+    }
+
+    @PostMapping(value = "/index", params = "_action_add_account")
+    public String saveAccount(@ModelAttribute Account account) {
+        accountService.save(account);
+
+        return "redirect:show?id=" + account.getId();
     }
 }
