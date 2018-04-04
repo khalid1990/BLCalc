@@ -12,6 +12,19 @@
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/js/jquery-ui-1.12.1/jquery-ui.css"/> "/>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/bootstrap-3.3.7-dist/css/bootstrap.css"/> "/>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/site.css"/>">
+    <style type="text/css">
+        .add-prod {
+            font-size: 24px;
+            color: green;
+            cursor: pointer;
+        }
+
+        .remove-prod {
+            font-size: 24px;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -115,6 +128,80 @@
 
                     <a href="${editUrl}"><fmt:message key="label.edit"/></a>
                 </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <fmt:message key="label.added.products"/>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td><fmt:message key="label.product.bl.id"/></td>
+                            <td><fmt:message key="label.product.name"/></td>
+                            <td><fmt:message key="label.count"/></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <c:forEach items="${addedProducts}" var="opc">
+                            <tr>
+                                <td>${opc.product.blId}</td>
+                                <td>${opc.product.name}</td>
+                                <td>${opc.count}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <fmt:message key="label.products"/>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                        <tr>
+                            <td><fmt:message key="label.product.bl.id"/></td>
+                            <td><fmt:message key="label.product.name"/></td>
+                            <td><fmt:message key="label.add.or.remove"/></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <c:forEach items="${products}" var="product">
+                            <tr>
+                                <td>${product.blId}</td>
+                                <td>${product.name}</td>
+                                <td>
+                                    <c:url var="addProductToOrder" value="/order/addProduct">
+                                        <c:param name="orderId" value="${order.id}"/>
+                                        <c:param name="productId" value="${product.id}"/>
+                                    </c:url>
+
+                                    <a href="${addProductToOrder}">
+                                        <span class="glyphicon glyphicon-plus add-prod"></span>
+                                    </a>
+
+                                    <c:url var="removeProductFromOrder" value="/order/removeProduct">
+                                        <c:param name="orderId" value="${order.id}"/>
+                                        <c:param name="productId" value="${product.id}"/>
+                                    </c:url>
+
+                                    <a href="${removeProductFromOrder}">
+                                        <span class="glyphicon glyphicon-minus remove-prod"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

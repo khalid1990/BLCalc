@@ -20,3 +20,4 @@ insert into bl_shipment (id, transport_vendor, serial_no_with_transport_vendor, 
       payment_date, payable_amount, amount_paid, comment) VALUES (1, 'KAHAR', 1, 'NOT_SHIPPED', '2018-02-13 07:15:31.123456789',
       'CASH_WITH_RIAD', '2018-02-13 07:15:31.123456789', 220, 220, 'comment... comment... comment...');
 
+insert into bl_order_product_count (id, order_id, product_id, count) values (1, 1, 1, 2);

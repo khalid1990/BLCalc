@@ -1,9 +1,13 @@
 package com.babar.bl.web.controller;
 
 import com.babar.bl.entity.Order;
+import com.babar.bl.entity.OrderProductCount;
+import com.babar.bl.entity.Product;
 import com.babar.bl.entity.common.enums.OrderStatus;
 import com.babar.bl.entity.common.enums.TransportVendor;
+import com.babar.bl.service.OrderProductCountService;
 import com.babar.bl.service.OrderService;
+import com.babar.bl.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,10 +33,18 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private OrderProductCountService opcService;
+
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         Order order = orderService.findOne(id);
         modelMap.put(COMMAND_NAME, order);
+        modelMap.put("products", productService.findAll());
+        modelMap.put("addedProducts", opcService.findByOrder(order));
 
         return ORDER_VIEW_FORM;
     }
@@ -69,5 +81,43 @@ public class OrderController {
         orderService.save(order);
 
         return "redirect:show?id=" + order.getId();
+    }
+
+    @GetMapping(value = "/addProduct")
+    public String addProduct(@RequestParam("orderId") int orderId,
+                             @RequestParam("productId") int productId) {
+
+        Order order = orderService.findOne(orderId);
+        Product product = productService.findOne(productId);
+        OrderProductCount opc = opcService.findByOrderAndProduct(order, product);
+        if (opc != null) {
+            opc.setCount(opc.getCount() + 1);
+        } else {
+            opc = new OrderProductCount();
+            opc.setOrder(order);
+            opc.setProduct(product);
+            opc.setCount(1);
+        }
+        opcService.save(opc);
+
+        return "redirect:show?id=" + orderId;
+    }
+
+    @GetMapping(value = "/removeProduct")
+    public String removeProduct(@RequestParam("orderId") int orderId,
+                                @RequestParam("productId") int productId) {
+        Order order = orderService.findOne(orderId);
+        Product product = productService.findOne(productId);
+        OrderProductCount opc = opcService.findByOrderAndProduct(order, product);
+        if (opc != null) {
+            if (opc.getCount() > 1) {
+                opc.setCount(opc.getCount()-1);
+                opcService.save(opc);
+            } else {
+                opcService.delete(opc);
+            }
+        }
+
+        return "redirect:show?id=" + orderId;
     }
 }
