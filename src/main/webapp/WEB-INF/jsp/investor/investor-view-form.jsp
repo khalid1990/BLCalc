@@ -46,6 +46,47 @@
             </div>
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <fmt:message key="label.accounts"/>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="row">
+                <label class="col-sm-2"><fmt:message key="label.order.total.amount"/></label>
+                <div class="col-sm-10">
+                    ${totalAmount}
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td><fmt:message key="label.account"/></td>
+                        <td><fmt:message key="label.amount"/></td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <c:forEach items="${investor.accounts}" var="account">
+                        <tr>
+                            <td>
+                                <c:url var="showAccount" value="/investor/showAccount">
+                                    <c:param name="id" value="${account.id}"/>
+                                </c:url>
+
+                                <a href="${showAccount}">${account.name}</a>
+                            </td>
+
+                            <td>${account.amount}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 

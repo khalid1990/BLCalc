@@ -4,6 +4,7 @@ import com.babar.bl.entity.Account;
 import com.babar.bl.entity.Investor;
 import com.babar.bl.service.AccountService;
 import com.babar.bl.service.InvestorService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,7 +50,10 @@ public class InvestorController {
 
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.put(COMMAND_NAME, investorService.findOne(id));
+        Investor investor = investorService.findOne(id);
+        modelMap.put(COMMAND_NAME, investor);
+        int totalAmount = investor.getAccounts().stream().mapToInt(Account::getAmount).sum();
+        modelMap.put("totalAmount", totalAmount);
 
         return INVESTOR_VIEW_FORM;
     }
@@ -95,7 +99,10 @@ public class InvestorController {
     @PostMapping(value = "/index", params = "_action_add_account")
     public String saveAccount(@ModelAttribute Account account) {
         accountService.save(account);
+        Investor investor = investorService.findOne(account.getInvestor().getId());
+        investor.getAccounts().add(account);
+        investorService.save(investor);
 
-        return "redirect:show?id=" + account.getId();
+        return "redirect:show?id=" + account.getInvestor().getId();
     }
 }
