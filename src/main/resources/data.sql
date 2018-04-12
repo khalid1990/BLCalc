@@ -1,11 +1,5 @@
 /* if you keep this file empty;you will get an error */
 
-insert into bl_order
-  (id, system_id, client_name, client_fb_id, address, phone, order_detail, inside_dhaka, transport_vendor, order_status,
-  delivery_charge, discount_amount, total_amount, net_benefit, comment, shipped)
-  values (1, '#32', 'Abul Hasan', 'www.facebook.com', 'banani 11', '0154214547', 'order detail', 1, 'KAHAR',  'DELIVERED',
-   60, 30, 1200, 200, 'comment', 0);
-
 insert into bl_investor (id, name) values (1, 'Babar');
 
 insert into bl_investment (id, investor_id, investment_type, amount, description, date)
@@ -19,5 +13,12 @@ insert into bl_product (id, bl_id, source_id, name, image_url, prod_url, buying_
 insert into bl_shipment (id, transport_vendor, serial_no_with_transport_vendor, shipment_status, shipment_date, payment_method,
       payment_date, payable_amount, amount_paid, comment) VALUES (1, 'KAHAR', 1, 'NOT_SHIPPED', '2018-02-13 07:15:31.123456789',
       'CASH_WITH_RIAD', '2018-02-13 07:15:31.123456789', 220, 220, 'comment... comment... comment...');
+
+insert into bl_order
+  (id, system_id, client_name, client_fb_id, address, phone, order_detail, inside_dhaka, transport_vendor, order_status,
+  delivery_charge, discount_amount, total_amount, net_benefit, comment, shipped, shipment_id)
+  values (1, '#32', 'Abul Hasan', 'www.facebook.com', 'banani 11', '0154214547', 'order detail', 1, 'KAHAR',  'DELIVERED',
+   60, 30, 1200, 200, 'comment', 0, null);
+
 
 insert into bl_order_product_count (id, order_id, product_id, count) values (1, 1, 1, 2);

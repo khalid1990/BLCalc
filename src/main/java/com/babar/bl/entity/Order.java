@@ -49,6 +49,9 @@ public class Order {
 
     private boolean shipped;
 
+    @ManyToOne
+    private Shipment shipment;
+
     public int getId() {
         return id;
     }
@@ -175,5 +178,13 @@ public class Order {
 
     public void setShipped(boolean shipped) {
         this.shipped = shipped;
+    }
+
+    public Shipment getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
     }
 }

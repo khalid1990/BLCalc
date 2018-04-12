@@ -98,7 +98,7 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach items="${shipment.orders}" var="order">
+                    <c:forEach items="${orders}" var="order">
                         <tr>
                             <td>${order.clientName}</td>
                             <td>${order.address}<br>${order.phone}</td>

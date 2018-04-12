@@ -43,9 +43,6 @@ public class Shipment {
 
     private String comment;
 
-    @OneToMany
-    private List<Order> orders;
-
     public int getId() {
         return id;
     }
@@ -126,11 +123,20 @@ public class Shipment {
         this.comment = comment;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Shipment shipment = (Shipment) o;
+
+        if (id != shipment.id) return false;
+
+        return true;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

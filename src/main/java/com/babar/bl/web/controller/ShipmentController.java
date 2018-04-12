@@ -73,7 +73,9 @@ public class ShipmentController {
 
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.put(COMMAND_NAME, shipmentService.findOne(id));
+        Shipment shipment = shipmentService.findOne(id);
+        modelMap.put(COMMAND_NAME, shipment);
+        modelMap.put("orders", orderService.findByShipment(shipment));
         modelMap.put("unshippedOrders", orderService.findByShipped(false));
 
         return SHIPMENT_VIEW_FORM;
@@ -105,9 +107,7 @@ public class ShipmentController {
 
         Shipment shipment = shipmentService.findOne(shipmentId);
         Order order = orderService.findOne(orderId);
-        shipment.getOrders().add(order);
-        shipmentService.save(shipment);
-
+        order.setShipment(shipment);
         order.setShipped(true);
         orderService.save(order);
 
@@ -118,14 +118,11 @@ public class ShipmentController {
     public String removeFromShipment(@RequestParam("shipmentId") int shipmentId,
                                      @RequestParam("orderId") int orderId) {
 
-        Shipment shipment = shipmentService.findOne(shipmentId);
         Order order = orderService.findOne(orderId);
-        shipment.getOrders().remove(order);
-        shipmentService.save(shipment);
-
+        order.setShipment(null);
         order.setShipped(false);
         orderService.save(order);
 
-        return "redirect:show?id=" + shipment.getId();
+        return "redirect:show?id=" + shipmentId;
     }
 }

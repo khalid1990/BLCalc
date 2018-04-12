@@ -1,6 +1,7 @@
 package com.babar.bl.service;
 
 import com.babar.bl.entity.Order;
+import com.babar.bl.entity.Shipment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ import java.util.List;
 public interface OrderService extends CrudRepository<Order, Integer> {
 
     List<Order> findByShipped(boolean shipped);
+
+    List<Order> findByShipment(Shipment shipment);
 }
