@@ -41,10 +41,6 @@ public class Order {
 
     private int discountAmount;
 
-    private int totalAmount;
-
-    private int netBenefit;
-
     private String comment;
 
     private boolean shipped;
@@ -146,22 +142,6 @@ public class Order {
 
     public void setDiscountAmount(int discountAmount) {
         this.discountAmount = discountAmount;
-    }
-
-    public int getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(int totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public int getNetBenefit() {
-        return netBenefit;
-    }
-
-    public void setNetBenefit(int netBenefit) {
-        this.netBenefit = netBenefit;
     }
 
     public String getComment() {

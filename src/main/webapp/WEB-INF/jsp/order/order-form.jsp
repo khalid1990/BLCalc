@@ -107,20 +107,6 @@
                     </div>
 
                     <div class="row">
-                        <label class="col-sm-2"><fmt:message key="label.order.total.amount"/></label>
-                        <div class="col-sm-10">
-                            <form:input path="totalAmount" cssClass="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label class="col-sm-2"><fmt:message key="label.order.net.benefit"/></label>
-                        <div class="col-sm-10">
-                            <form:input path="netBenefit" cssClass="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <label class="col-sm-2"><fmt:message key="label.order.comment"/></label>
                         <div class="col-sm-10">
                             <form:input path="comment" cssClass="form-control"/>

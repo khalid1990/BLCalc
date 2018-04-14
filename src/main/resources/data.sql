@@ -16,9 +16,8 @@ insert into bl_shipment (id, transport_vendor, serial_no_with_transport_vendor, 
 
 insert into bl_order
   (id, system_id, client_name, client_fb_id, address, phone, order_detail, inside_dhaka, transport_vendor, order_status,
-  delivery_charge, discount_amount, total_amount, net_benefit, comment, shipped, shipment_id)
-  values (1, '#32', 'Abul Hasan', 'www.facebook.com', 'banani 11', '0154214547', 'order detail', 1, 'KAHAR',  'DELIVERED',
-   60, 30, 1200, 200, 'comment', 0, null);
-
+  delivery_charge, discount_amount, comment, shipped, shipment_id)
+  values (1, '#32', 'Abul Hasan', 'https://www.facebook.com', 'banani 11', '0154214547', 'order detail', 1, 'KAHAR',  'DELIVERED',
+   60, 30, 'comment', 0, null);
 
 insert into bl_order_product_count (id, order_id, product_id, count) values (1, 1, 1, 2);

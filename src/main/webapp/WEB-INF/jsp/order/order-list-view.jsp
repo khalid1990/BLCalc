@@ -49,7 +49,7 @@
                         <tr>
                             <td>
                                 <c:url var="showUrl" value="/order/show">
-                                    <c:param name="id" value="${order.systemId}"/>
+                                    <c:param name="id" value="${order.id}"/>
                                 </c:url>
                                 <a href="${showUrl}">
                                     ${order.systemId}

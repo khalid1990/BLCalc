@@ -8,6 +8,7 @@ import com.babar.bl.entity.common.enums.TransportVendor;
 import com.babar.bl.service.OrderProductCountService;
 import com.babar.bl.service.OrderService;
 import com.babar.bl.service.ProductService;
+import com.babar.bl.web.helper.OrderHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,12 +40,13 @@ public class OrderController {
     @Autowired
     private OrderProductCountService opcService;
 
+    @Autowired
+    private OrderHelper orderHelper;
+
     @GetMapping("/show")
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         Order order = orderService.findOne(id);
-        modelMap.put(COMMAND_NAME, order);
-        modelMap.put("products", productService.findAll());
-        modelMap.put("addedProducts", opcService.findByOrder(order));
+        orderHelper.populateOrderModelForReadOnly(modelMap, order);
 
         return ORDER_VIEW_FORM;
     }
@@ -52,9 +54,7 @@ public class OrderController {
     @GetMapping(value = "/create")
     public String create(ModelMap modelMap) {
         Order order = new Order();
-        modelMap.put(COMMAND_NAME, order);
-        modelMap.put("transportVendors", TransportVendor.values());
-        modelMap.put("orderStatuses", OrderStatus.values());
+        orderHelper.populateOrderModelForEditable(modelMap, order);
 
         return ORDER_FORM;
     }
@@ -62,9 +62,7 @@ public class OrderController {
     @GetMapping(value = "/edit")
     public String edit(@RequestParam("id") int id, ModelMap modelMap) {
         Order order = orderService.findOne(id);
-        modelMap.put(COMMAND_NAME, order);
-        modelMap.put("transportVendors", TransportVendor.values());
-        modelMap.put("orderStatuses", OrderStatus.values());
+        orderHelper.populateOrderModelForEditable(modelMap, order);
 
         return ORDER_FORM;
     }
