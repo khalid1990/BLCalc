@@ -11,8 +11,8 @@ insert into bl_product (id, bl_id, source_id, name, image_url, prod_url, buying_
    'www.google.com', 360, 480, 'LEARNING_TOOL', 'WOOD', 14, 0, 'Very good...');
 
 insert into bl_shipment (id, transport_vendor, serial_no_with_transport_vendor, shipment_status, shipment_date, payment_method,
-      payment_date, payable_amount, amount_paid, comment) VALUES (1, 'KAHAR', 1, 'NOT_SHIPPED', '2018-02-13 07:15:31.123456789',
-      'CASH_WITH_RIAD', '2018-02-13 07:15:31.123456789', 220, 220, 'comment... comment... comment...');
+      payment_date, amount_paid, comment) VALUES (1, 'KAHAR', 1, 'NOT_SHIPPED', '2018-02-13 07:15:31.123456789',
+      'CASH_WITH_RIAD', '2018-02-13 07:15:31.123456789', 220, 'comment... comment... comment...');
 
 insert into bl_order
   (id, system_id, client_name, client_fb_id, address, phone, order_detail, inside_dhaka, transport_vendor, order_status,

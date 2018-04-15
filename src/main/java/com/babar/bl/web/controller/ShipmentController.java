@@ -7,6 +7,7 @@ import com.babar.bl.entity.common.enums.ShipmentStatus;
 import com.babar.bl.entity.common.enums.TransportVendor;
 import com.babar.bl.service.OrderService;
 import com.babar.bl.service.ShipmentService;
+import com.babar.bl.web.helper.ShipmentHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -43,6 +44,9 @@ public class ShipmentController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ShipmentHelper shipmentHelper;
+
     @InitBinder(value = COMMAND_NAME)
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -77,6 +81,7 @@ public class ShipmentController {
         modelMap.put(COMMAND_NAME, shipment);
         modelMap.put("orders", orderService.findByShipment(shipment));
         modelMap.put("unshippedOrders", orderService.findByShipped(false));
+        modelMap.put("payableAmount", shipmentHelper.getShipmentPayableAmount(shipment));
 
         return SHIPMENT_VIEW_FORM;
     }

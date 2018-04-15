@@ -16,14 +16,13 @@
 
 <body>
 <div class="container">
+    <h2><fmt:message key="label.shipment"/></h2>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <fmt:message key="label.shipment"/>
+            <fmt:message key="label.shipment.general.information"/>
         </div>
 
         <div class="panel-body">
-            <a href="<c:url value="/shipment/list"/>"><fmt:message key="label.shipment.shipment.list"/></a>
-
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="label.transport.vendor"/></label>
                 <div class="col-sm-10">${shipment.transportVendor}</div>
@@ -56,7 +55,7 @@
 
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="label.shipment.payable.amount"/></label>
-                <div class="col-sm-10">${shipment.payableAmount}</div>
+                <div class="col-sm-10">${payableAmount}</div>
             </div>
 
             <div class="row">
@@ -68,13 +67,21 @@
                 <label class="col-sm-2"><fmt:message key="label.comment"/></label>
                 <div class="col-sm-10">${shipment.comment}</div>
             </div>
+        </div>
 
+        <div class="panel-footer">
             <div class="row">
-                <c:url var="editUrl" value="/shipment/edit">
-                    <c:param name="id" value="${shipment.id}"/>
-                </c:url>
+                <div class="col-sm-2">
+                    <c:url var="listUrl" value="/shipment/list"/>
+                    <a href="${listUrl}" class="btn btn-default"><fmt:message key="label.shipment.shipment.list"/></a>
+                </div>
 
-                <a href="${editUrl}"><fmt:message key="label.edit"/></a>
+                <div class="col-sm-2">
+                    <c:url var="editUrl" value="/shipment/edit">
+                        <c:param name="id" value="${shipment.id}"/>
+                    </c:url>
+                    <a href="${editUrl}" class="btn btn-default"><fmt:message key="label.edit"/></a>
+                </div>
             </div>
         </div>
     </div>

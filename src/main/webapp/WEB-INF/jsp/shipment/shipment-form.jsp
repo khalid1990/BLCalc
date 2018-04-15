@@ -85,13 +85,6 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2"><fmt:message key="label.shipment.payable.amount"/></label>
-                    <div class="col-sm-10">
-                        <form:input path="payableAmount" cssClass="form-control"/>
-                    </div>
-                </div>
-
-                <div class="row">
                     <label class="col-sm-2"><fmt:message key="label.shipment.amount.paid"/></label>
                     <div class="col-sm-10">
                         <form:input path="amountPaid" cssClass="form-control"/>

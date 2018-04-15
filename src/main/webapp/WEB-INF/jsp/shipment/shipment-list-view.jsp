@@ -36,7 +36,7 @@
                         <th><fmt:message key="label.transport.vendor"/></th>
                         <th><fmt:message key="label.shipment.status"/></th>
                         <th><fmt:message key="label.shipment.date"/></th>
-                        <th><fmt:message key="label.shipment.payable.amount"/></th>
+                        <%--<th><fmt:message key="label.shipment.payable.amount"/></th>--%>
                         <th><fmt:message key="label.comment"/></th>
                     </tr>
                 </thead>
@@ -53,7 +53,7 @@
                             <td>${shipment.transportVendor}#${shipment.serialNoWithTransportVendor}</td>
                             <td>${shipment.shipmentStatus}</td>
                             <td>${shipment.shipmentDate}</td>
-                            <td>${shipment.payableAmount}</td>
+                            <%--<td>${shipment.payableAmount}</td>--%>
                             <td>${shipment.comment}</td>
                         </tr>
                     </c:forEach>

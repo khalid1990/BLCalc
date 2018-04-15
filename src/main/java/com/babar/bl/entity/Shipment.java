@@ -37,8 +37,6 @@ public class Shipment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
-    private int payableAmount;
-
     private int amountPaid;
 
     private String comment;
@@ -97,14 +95,6 @@ public class Shipment {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
-    }
-
-    public int getPayableAmount() {
-        return payableAmount;
-    }
-
-    public void setPayableAmount(int payableAmount) {
-        this.payableAmount = payableAmount;
     }
 
     public int getAmountPaid() {
