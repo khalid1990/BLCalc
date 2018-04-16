@@ -44,8 +44,8 @@
             </div>
 
             <div class="row">
-                <label class="col-sm-2"><fmt:message key="label.shipment.payment.method"/></label>
-                <div class="col-sm-10">${shipment.paymentMethod}</div>
+                <label class="col-sm-2"><fmt:message key="label.account"/></label>
+                <div class="col-sm-10">${shipment.account.name}</div>
             </div>
 
             <div class="row">

@@ -69,10 +69,10 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2"><fmt:message key="label.shipment.payment.method"/></label>
+                    <label class="col-sm-2"><fmt:message key="label.account"/></label>
                     <div class="col-sm-10">
-                        <form:select path="paymentMethod" cssClass="form-control">
-                            <form:options items="${paymentMethods}"/>
+                        <form:select path="account" cssClass="form-control">
+                            <form:options items="${accounts}" itemLabel="name" itemValue="id" cssClass="form-control"/>
                         </form:select>
                     </div>
                 </div>

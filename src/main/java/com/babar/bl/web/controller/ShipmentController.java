@@ -5,6 +5,7 @@ import com.babar.bl.entity.Shipment;
 import com.babar.bl.entity.common.enums.PaymentMethod;
 import com.babar.bl.entity.common.enums.ShipmentStatus;
 import com.babar.bl.entity.common.enums.TransportVendor;
+import com.babar.bl.service.AccountService;
 import com.babar.bl.service.OrderService;
 import com.babar.bl.service.ShipmentService;
 import com.babar.bl.web.helper.ShipmentHelper;
@@ -45,6 +46,9 @@ public class ShipmentController {
     private OrderService orderService;
 
     @Autowired
+    private AccountService accountService;
+
+    @Autowired
     private ShipmentHelper shipmentHelper;
 
     @InitBinder(value = COMMAND_NAME)
@@ -60,7 +64,7 @@ public class ShipmentController {
         modelMap.put(COMMAND_NAME, new Shipment());
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("shipmentStatuses", ShipmentStatus.values());
-        modelMap.put("paymentMethods", PaymentMethod.values());
+        modelMap.put("accounts", accountService.findAll());
 
         return SHIPMENT_FORM;
     }
@@ -70,7 +74,7 @@ public class ShipmentController {
         modelMap.put(COMMAND_NAME, shipmentService.findOne(id));
         modelMap.put("transportVendors", TransportVendor.values());
         modelMap.put("shipmentStatuses", ShipmentStatus.values());
-        modelMap.put("paymentMethods", PaymentMethod.values());
+        modelMap.put("accounts", accountService.findAll());
 
         return SHIPMENT_FORM;
     }
@@ -95,13 +99,11 @@ public class ShipmentController {
 
     @PostMapping(value = "/index", params = "_action_save")
     public String saveOrUpdate(@ModelAttribute Shipment shipment) {
+        if (shipment.getShipmentStatus().equals(ShipmentStatus.COMPLETED)) {
+            int oldAmount = shipment.getAccount().getAmount();
+            shipment.getAccount().setAmount(oldAmount + shipment.getAmountPaid());
+        }
         shipmentService.save(shipment);
-        /*if (result.hasErrors()) {
-            System.out.println("errors");
-            for (ObjectError error : result.getAllErrors()) {
-                System.out.println(error.toString());
-            }
-        }*/
 
         return "redirect:show?id=" + shipment.getId();
     }

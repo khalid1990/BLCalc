@@ -31,8 +31,8 @@ public class Shipment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date shipmentDate;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
+    @ManyToOne
+    private Account account;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
@@ -81,12 +81,12 @@ public class Shipment {
         this.shipmentDate = shipmentDate;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Date getPaymentDate() {
