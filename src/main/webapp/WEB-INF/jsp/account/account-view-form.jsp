@@ -32,7 +32,7 @@
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="label.total.amount"/></label>
 
-                <div class="col-sm-10">${account.amount}</div>
+                <div class="col-sm-10">${totalAmount}</div>
             </div>
 
             <div class="row">

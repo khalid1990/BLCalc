@@ -25,7 +25,7 @@
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <fmt:message key="label.invest.list"/>
+                <fmt:message key="label.investment.list"/>
             </div>
 
             <div class="panel-body">

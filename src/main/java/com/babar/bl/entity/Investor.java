@@ -17,10 +17,10 @@ public class Investor {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "investor")
     private List<Investment> investments;
 
-    @OneToMany
+    @OneToMany(mappedBy = "investor")
     private List<Account> accounts;
 
     public int getId() {

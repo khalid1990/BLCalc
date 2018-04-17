@@ -99,10 +99,6 @@ public class ShipmentController {
 
     @PostMapping(value = "/index", params = "_action_save")
     public String saveOrUpdate(@ModelAttribute Shipment shipment) {
-        if (shipment.getShipmentStatus().equals(ShipmentStatus.COMPLETED)) {
-            int oldAmount = shipment.getAccount().getAmount();
-            shipment.getAccount().setAmount(oldAmount + shipment.getAmountPaid());
-        }
         shipmentService.save(shipment);
 
         return "redirect:show?id=" + shipment.getId();

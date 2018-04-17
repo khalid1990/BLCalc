@@ -19,8 +19,6 @@ public class Account {
     @ManyToOne
     private Investor investor;
 
-    private int amount;
-
     public int getId() {
         return id;
     }
@@ -43,13 +41,5 @@ public class Account {
 
     public void setInvestor(Investor investor) {
         this.investor = investor;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 }

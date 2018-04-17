@@ -1,9 +1,13 @@
 package com.babar.bl.web.controller;
 
 import com.babar.bl.entity.Account;
+import com.babar.bl.entity.Investment;
 import com.babar.bl.entity.Investor;
+import com.babar.bl.entity.Shipment;
+import com.babar.bl.entity.common.enums.ShipmentStatus;
 import com.babar.bl.service.AccountService;
 import com.babar.bl.service.InvestorService;
+import com.babar.bl.service.ShipmentService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +45,9 @@ public class InvestorController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private ShipmentService shipmentService;
+
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
         modelMap.put(COMMAND_NAME, new Investor());
@@ -52,8 +59,19 @@ public class InvestorController {
     public String show(@RequestParam("id") int id, ModelMap modelMap) {
         Investor investor = investorService.findOne(id);
         modelMap.put(COMMAND_NAME, investor);
-        int totalAmount = investor.getAccounts().stream().mapToInt(Account::getAmount).sum();
+        int totalAmount = investor.getAccounts().stream()
+                .mapToInt(account -> shipmentService.findByAccount(account)
+                        .stream()
+                        .filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.SHIPMENT_DONE_AND_PAID)
+                        .mapToInt(Shipment::getAmountPaid)
+                        .sum())
+                .sum();
         modelMap.put("totalAmount", totalAmount);
+        modelMap.put("totalInvestment", investor.getInvestments()
+                .stream()
+                .mapToInt(Investment::getAmount)
+                .sum()
+        );
 
         return INVESTOR_VIEW_FORM;
     }
@@ -92,6 +110,12 @@ public class InvestorController {
     public String showAccount(@RequestParam("id") int id, ModelMap modelMap) {
         Account account = accountService.findOne(id);
         modelMap.put(ACCOUNT_COMMAND_NAME, account);
+        modelMap.put("totalAmount", shipmentService.findByAccount(account)
+                .stream()
+                .filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.SHIPMENT_DONE_AND_PAID)
+                .mapToInt(Shipment::getAmountPaid)
+                .sum()
+        );
 
         return ACCOUNT_VIEW_FORM;
     }
@@ -99,9 +123,6 @@ public class InvestorController {
     @PostMapping(value = "/index", params = "_action_add_account")
     public String saveAccount(@ModelAttribute Account account) {
         accountService.save(account);
-        Investor investor = investorService.findOne(account.getInvestor().getId());
-        investor.getAccounts().add(account);
-        investorService.save(investor);
 
         return "redirect:show?id=" + account.getInvestor().getId();
     }

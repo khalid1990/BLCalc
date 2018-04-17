@@ -26,23 +26,27 @@
                 <label class="col-sm-2"><fmt:message key="label.investor.name"/></label>
                 <div class="col-sm-10">${investor.name}</div>
             </div>
+        </div>
 
+        <div class="panel-footer">
             <div class="row">
-                <c:url var="editUrl" value="/investor/edit">
-                    <c:param name="id" value="${investor.id}"/>
-                </c:url>
+                <div class="col-sm-2">
+                    <c:url var="editUrl" value="/investor/edit">
+                        <c:param name="id" value="${investor.id}"/>
+                    </c:url>
 
-                <a href="${editUrl}" class="btn btn-default">
-                    <fmt:message key="label.edit"/>
-                </a>
-                <input class="btn btn-default" type="submit" name="_action_save"
-                       value="<fmt:message key="label.save.or.update"/>">
+                    <a href="${editUrl}" class="btn btn-default">
+                        <fmt:message key="label.edit"/>
+                    </a>
+                </div>
 
-                <c:url var="createAccount" value="/investor/createAccount">
-                    <c:param name="investorId" value="${investor.id}"/>
-                </c:url>
+                <div class="col-sm-2">
+                    <c:url var="createAccount" value="/investor/createAccount">
+                        <c:param name="investorId" value="${investor.id}"/>
+                    </c:url>
 
-                <a href="${createAccount}"><fmt:message key="label.create.account"/></a>
+                    <a href="${createAccount}"><fmt:message key="label.create.account"/></a>
+                </div>
             </div>
         </div>
     </div>
@@ -65,7 +69,6 @@
                 <thead>
                     <tr>
                         <td><fmt:message key="label.account"/></td>
-                        <td><fmt:message key="label.amount"/></td>
                     </tr>
                 </thead>
 
@@ -79,8 +82,54 @@
 
                                 <a href="${showAccount}">${account.name}</a>
                             </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                            <td>${account.amount}</td>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <fmt:message key="label.investment.list"/>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <label class="col-sm-2"><fmt:message key="label.total.investment"/></label>
+                <div class="col-sm-10">
+                    ${totalInvestment}
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="label.serial.no"/></th>
+                        <th><fmt:message key="label.date"/></th>
+                        <th><fmt:message key="label.investment.type"/></th>
+                        <th><fmt:message key="label.amount"/></th>
+                        <th><fmt:message key="label.description"/></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <c:forEach items="${investor.investments}" var="investment">
+                        <tr>
+                            <td>
+                                <c:url var="showUrl" value="/investment/show">
+                                    <c:param name="id" value="${investment.id}"/>
+                                </c:url>
+                                <a href="${showUrl}">${investment.id}</a>
+                            </td>
+
+                            <td><fmt:formatDate value="${investment.date}" pattern="dd/MM/yyyy"/></td>
+
+                            <td>${investment.investmentType}</td>
+
+                            <td>${investment.amount}</td>
+
+                            <td>${investment.description}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
