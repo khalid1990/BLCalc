@@ -54,4 +54,24 @@ public class Investor {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Investor)) return false;
+
+        Investor investor = (Investor) o;
+
+        if (id != investor.id) return false;
+        if (!name.equals(investor.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
 }

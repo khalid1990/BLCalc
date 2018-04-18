@@ -4,6 +4,7 @@ import com.babar.bl.entity.common.enums.OrderStatus;
 import com.babar.bl.entity.common.enums.TransportVendor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author babar
@@ -47,6 +48,9 @@ public class Order {
 
     @ManyToOne
     private Shipment shipment;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderProductCount> orderProductCounts;
 
     public int getId() {
         return id;
@@ -166,5 +170,18 @@ public class Order {
 
     public void setShipment(Shipment shipment) {
         this.shipment = shipment;
+    }
+
+    public int getTotalAmount() {
+        return orderProductCounts.stream().mapToInt(opc -> opc.getProduct().getSellingPrice() * opc.getCount()).sum()
+                + deliveryCharge - discountAmount;
+    }
+
+    public List<OrderProductCount> getOrderProductCounts() {
+        return orderProductCounts;
+    }
+
+    public void setOrderProductCounts(List<OrderProductCount> orderProductCounts) {
+        this.orderProductCounts = orderProductCounts;
     }
 }

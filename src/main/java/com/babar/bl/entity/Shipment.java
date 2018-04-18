@@ -41,6 +41,9 @@ public class Shipment {
 
     private String comment;
 
+    @OneToMany(mappedBy = "shipment")
+    private List<Order> orders;
+
     public int getId() {
         return id;
     }
@@ -111,6 +114,18 @@ public class Shipment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public int getTotalAmount() {
+        return orders.stream().mapToInt(Order::getTotalAmount).sum();
     }
 
     @Override
