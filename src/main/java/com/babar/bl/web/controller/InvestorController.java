@@ -1,13 +1,13 @@
 package com.babar.bl.web.controller;
 
-import com.babar.bl.entity.Account;
-import com.babar.bl.entity.Investment;
-import com.babar.bl.entity.Investor;
-import com.babar.bl.entity.Shipment;
+import com.babar.bl.entity.*;
 import com.babar.bl.entity.common.enums.ShipmentStatus;
+import com.babar.bl.entity.common.enums.TransactionType;
 import com.babar.bl.service.AccountService;
 import com.babar.bl.service.InvestorService;
 import com.babar.bl.service.ShipmentService;
+import com.babar.bl.service.TransactionService;
+import com.babar.bl.web.helper.InvestorHelper;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +22,15 @@ import javax.persistence.Entity;
  */
 @Controller
 @RequestMapping(("/investor"))
-@SessionAttributes({InvestorController.COMMAND_NAME, InvestorController.ACCOUNT_COMMAND_NAME})
+@SessionAttributes({InvestorController.COMMAND_NAME,
+        InvestorController.ACCOUNT_COMMAND_NAME, InvestorController.TRANSACTION_COMMAND_NAME})
 public class InvestorController {
 
     public static final String COMMAND_NAME = "investor";
 
     public static final String ACCOUNT_COMMAND_NAME = "account";
+
+    public static final String TRANSACTION_COMMAND_NAME = "transaction";
 
     private static final String INVESTOR_FORM = "investor/investor-form";
 
@@ -39,6 +42,8 @@ public class InvestorController {
 
     private static final String ACCOUNT_VIEW_FORM = "account/account-view-form";
 
+    private static final String TRANSACTION_FORM = "transaction/transaction-form";
+
     @Autowired
     private InvestorService investorService;
 
@@ -46,7 +51,10 @@ public class InvestorController {
     private AccountService accountService;
 
     @Autowired
-    private ShipmentService shipmentService;
+    private TransactionService transactionService;
+
+    @Autowired
+    private InvestorHelper investorHelper;
 
     @GetMapping("/create")
     public String create(ModelMap modelMap) {
@@ -60,11 +68,7 @@ public class InvestorController {
         Investor investor = investorService.findOne(id);
         modelMap.put(COMMAND_NAME, investor);
         int totalAmount = investor.getAccounts().stream()
-                .mapToInt(account -> shipmentService.findByAccount(account)
-                        .stream()
-                        .filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.SHIPMENT_DONE_AND_PAID)
-                        .mapToInt(Shipment::getAmountPaid)
-                        .sum())
+                .mapToInt(investorHelper::getAccountAmount)
                 .sum();
         modelMap.put("totalAmount", totalAmount);
         modelMap.put("totalInvestment", investor.getInvestments()
@@ -110,12 +114,8 @@ public class InvestorController {
     public String showAccount(@RequestParam("id") int id, ModelMap modelMap) {
         Account account = accountService.findOne(id);
         modelMap.put(ACCOUNT_COMMAND_NAME, account);
-        modelMap.put("totalAmount", shipmentService.findByAccount(account)
-                .stream()
-                .filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.SHIPMENT_DONE_AND_PAID)
-                .mapToInt(Shipment::getAmountPaid)
-                .sum()
-        );
+        modelMap.put("totalAmount", investorHelper.getAccountAmount(account));
+        modelMap.put("transactions", transactionService.findByAccount(account));
 
         return ACCOUNT_VIEW_FORM;
     }
@@ -125,5 +125,24 @@ public class InvestorController {
         accountService.save(account);
 
         return "redirect:show?id=" + account.getInvestor().getId();
+    }
+
+    @GetMapping(value = "/addTransaction")
+    public String addTransaction(@RequestParam("accountId") int accountId, ModelMap modelMap) {
+        Transaction transaction = new Transaction();
+        Account account = accountService.findOne(accountId);
+        transaction.setAccount(account);
+
+        modelMap.put(TRANSACTION_COMMAND_NAME, transaction);
+        modelMap.put("transactions", TransactionType.values());
+
+        return TRANSACTION_FORM;
+    }
+
+    @PostMapping(value = "/saveTransaction")
+    public String saveTransaction(@ModelAttribute Transaction transaction) {
+        transactionService.save(transaction);
+
+        return "redirect:showAccount?id=" +  transaction.getAccount().getId();
     }
 }

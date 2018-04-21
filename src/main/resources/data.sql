@@ -25,3 +25,9 @@ insert into bl_order
    60, 30, 'comment', 0, null);
 
 insert into bl_order_product_count (id, order_id, product_id, count) values (1, 1, 1, 2);
+
+insert into bl_transaction (id, transaction_date, transaction_type, account_id, amount, description) values
+  (1, '2018-02-13 07:15:31.123456789', 'INCREMENTAL', 1, 500, 'babar invested cash');
+
+insert into bl_transaction (id, transaction_date, transaction_type, account_id, amount, description) values
+  (2, '2018-02-13 07:15:31.123456789', 'DECREMENTAL', 1, 230, 'babar did cash out');

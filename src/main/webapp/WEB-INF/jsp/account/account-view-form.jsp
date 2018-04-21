@@ -42,15 +42,58 @@
                     ${account.investor.name}
                 </div>
             </div>
+        </div>
 
+        <div class="panel-footer">
             <div class="row">
-                <c:url var="backToInvestor" value="/investor/show">
-                    <c:param name="id" value="${account.investor.id}"/>
-                </c:url>
+                <div class="col-sm-2">
+                    <c:url var="backToInvestor" value="/investor/show">
+                        <c:param name="id" value="${account.investor.id}"/>
+                    </c:url>
 
-                <a href="${backToInvestor}"><fmt:message key="label.back.to.investor"/></a>
+                    <a href="${backToInvestor}"><fmt:message key="label.back.to.investor"/></a>
+                </div>
+
+                <div class="col-sm-2">
+                    <c:url var="addTransaction" value="/investor/addTransaction">
+                        <c:param name="accountId" value="${account.id}"/>
+                    </c:url>
+
+                    <a href="${addTransaction}">
+                        <fmt:message key="label.add.transaction"/>
+                    </a>
+                </div>
             </div>
+        </div>
+    </div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <fmt:message key="label.transactions"/>
+        </div>
+
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><fmt:message key="label.transaction.date"/></td>
+                        <td><fmt:message key="label.amount"/></td>
+                        <td><fmt:message key="label.transaction.type"/></td>
+                        <td><fmt:message key="label.description"/></td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <c:forEach items="${transactions}" var="transaction">
+                        <tr>
+                            <td><fmt:formatDate value="${transaction.transactionDate}" pattern="dd/MM/yyyy"/></td>
+                            <td>${transaction.amount}</td>
+                            <td>${transaction.transactionType}</td>
+                            <td>${transaction.description}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
